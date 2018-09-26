@@ -31,3 +31,16 @@ set the default PMPro level requirements for new pages, posts, or any custom pos
 
  - [ ] Support dynamically generated posts as well.
  - [ ] Explicitly support Gutenburg
+
+## Release notes
+
+### `v0.4`
+
+ - Added support to for setting defaults per custom post type.
+ - Added ability to reset new post to defaults after changing but before saving.
+
+### `v0.3`
+
+ - Initial release; extracted from internal project
+ - Cleaned up syntax and styling
+ - Also show on edit page w/ link to reset
