@@ -105,12 +105,12 @@ function pmdef_admin_script()
 
     $current_screen = get_current_screen();
 
-    if ($current_screen->parent_base === 'post' || $current_screen->parent_base === 'post-new') {
-        $is_new = $current_screen && $current_screen->parent_base === 'post-new';
+    if ($current_screen && $current_screen->base === 'post') {
+        $is_new = $current_screen->action === 'add';
         $options = pmdef_get_opts();
         $levels = json_encode($options['levels']);
         ?>
-
+        <!-- pmdef script start -->
         <script type="text/javascript">
             (function ($, global) {
                 'use strict';
@@ -127,7 +127,8 @@ function pmdef_admin_script()
                     }
                 };
 
-                $(window.document).on('click', '#pmdef_reset_btn', function () {
+                $(window.document).on('click', '#pmdef_reset_btn', function (event) {
+                    event.preventDefault();
                     var $postbox = $('#pmpro_page_meta');
                     if ($postbox.length) {
                         global.pmdef.overrideWithDefaults($postbox)
@@ -137,24 +138,28 @@ function pmdef_admin_script()
                 $(function () {
                     var $postbox = $('#pmpro_page_meta');
                     if ($postbox.length) {
-                        global.pmdef.overrideWithDefaults($postbox);
+                        var settingsLink = '(<a href="/wp-admin/<?php echo $pmdef_options_parent; ?>?page=pmdef">' +
+                            'Settings' +
+                            '</a>)';
                         <?php if($is_new): ?>
+                        global.pmdef.overrideWithDefaults($postbox);
                         $('.inside', $postbox).append(
-                            '<p><strong>Defaults have been set by PMPro Default Level</strong> ' +
-                            '(<a href="/wp-admin/<?php echo $pmdef_options_parent; ?>?page=pmdef">Settings</a>)</p>'
+                            '<p><strong>Defaults have been set by PMPro Default Level</strong> ' + settingsLink + '</p>'
                         );
                         <?php else: ?>
                         $('.inside', $postbox).append(
                             '<p><strong>' +
                             '<a href="#" id="pmdef_reset_btn">Click here</a>' +
                             ' to override with defaults according to PMPro Default Level</strong> ' +
-                            '(<a href="/wp-admin/<?php echo $pmdef_options_parent; ?>?page=pmdef">Settings</a>)</p>'
+                            settingsLink +
+                            '</p>'
                         );
                         <?php endif; ?>
                     }
                 });
             })(jQuery, window);
         </script>
+        <!-- pmdef script end -->
     <?php }
 }
 
