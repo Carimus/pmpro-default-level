@@ -34,6 +34,10 @@ set the default PMPro level requirements for new pages, posts, or any custom pos
 
 ## Release notes
 
+### `v0.5`
+
+ - Updated project license.
+
 ### `v0.4`
 
  - Added support to for setting defaults per custom post type.
