@@ -4,7 +4,7 @@
 Plugin Name: PMPro Default Post Membership Level
 Plugin URI: https://github.com/Carimus/pmpro-default-level
 Description: Set the default PMPro "Require Membership" settings on new posts (including custom post types).
-Version: 0.3
+Version: 0.4
 Author: Carimus
 Author URI: https://carimus.com
 License: MIT
