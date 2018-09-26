@@ -279,24 +279,31 @@ function pmdef_admin_script()
 
     $current_screen = get_current_screen();
 
-    if ($current_screen && $current_screen->base === 'post') {
+    if ($current_screen && $current_screen->base === 'post' && function_exists('pmpro_getAllLevels')) {
         $is_new = $current_screen->action === 'add';
         $post_type = $current_screen->post_type ?: 'post';
         $options = pmdef_get_opts();
-        $levels = json_encode($options['levels_by_post_type'][$post_type]);
+        $allLevels = pmpro_getAllLevels();
+        $allLevelIds = [];
+        foreach($allLevels as $level) {
+            $allLevelIds[] = intval($level->id);
+        }
+        $allLevelIds = json_encode($allLevelIds);
+        $defaultLevels = json_encode($options['levels_by_post_type'][$post_type]);
         ?>
         <!-- pmdef script start -->
         <script type="text/javascript">
             (function ($, global) {
                 'use strict';
-                var levels = <?php echo $levels; ?>;
+                var allLevels = <?php echo $allLevelIds; ?>;
+                var defaultLevels = <?php echo $defaultLevels; ?>;
 
                 global.pmdef = {
                     overrideWithDefaults: function ($postbox) {
-                        $.each(levels, function (idx, level) {
+                        $.each(allLevels, function (idx, level) {
                             var $checkbox = $('#in-membership-level-' + level, $postbox);
                             if ($checkbox.length) {
-                                $checkbox.prop('checked', true);
+                                $checkbox.prop('checked', defaultLevels.indexOf(level) !== -1);
                             }
                         });
                     }
@@ -319,7 +326,10 @@ function pmdef_admin_script()
                         <?php if($is_new): ?>
                         global.pmdef.overrideWithDefaults($postbox);
                         $('.inside', $postbox).append(
-                            '<p><strong>Defaults have been set by PMPro Default Level</strong> ' + settingsLink + '</p>'
+                            '<p><strong>Defaults have been set by PMPro Default Level</strong> ' + settingsLink +
+                            '</p><p><strong><a href="#" id="pmdef_reset_btn">Click here</a> to reset to the defaults.' +
+                            '</strong>' +
+                            '</p>'
                         );
                         <?php else: ?>
                         $('.inside', $postbox).append(
