@@ -9,6 +9,8 @@ set the default PMPro level requirements for new pages, posts, or any custom pos
  - Easily copy settings from and to post types if you have a lot of them
  - Reset level requirements for an existing post to the configured defaults.
  - Reset level requirements for new post to the configured defaults after changing but before saving.
+ - Tools to reset all existing posts en masse to their configured default access levels (optionally filtered by
+   post type).
  - Set `WP_DEBUG` to `true` for debug output on the "PMPro Default Levels" settings page.
 
 ## Prerequisites
@@ -33,6 +35,10 @@ set the default PMPro level requirements for new pages, posts, or any custom pos
  - [ ] Explicitly support Gutenburg
 
 ## Release notes
+
+### `v0.6`
+
+ - Add support to reset all posts (or all posts in a certain post type) to their configured default access levels
 
 ### `v0.5`
 
