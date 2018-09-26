@@ -44,3 +44,9 @@ set the default PMPro level requirements for new pages, posts, or any custom pos
  - Initial release; extracted from internal project
  - Cleaned up syntax and styling
  - Also show on edit page w/ link to reset
+
+## License
+
+This project is licensed under the [MIT open source license](https://opensource.org/licenses/MIT).
+
+[Read the full license here](./LICENSE)
